@@ -1,18 +1,16 @@
-import paho.mqtt.client as paho
-import time
-import random
+import os
+import sys
 
-def on_publish(client, userdata, mid):
-    print("client : "+str(client))
-    print("userdata : "+str(userdata))
-    print("mid : "+str(mid))
- 
-client = paho.Client()
-client.on_publish = on_publish
-client.connect("www.mqtt-dashboard.com", port=1883)
-client.loop_start()
+# How to run 
+# python3 publish.py 127.0.0.1 topic/subtopic "ini pesannya" 2
 
-while True:
-    temperature = random.randint(0, 5000000)
-    (rc, mid) = client.publish("8d1db723-c4b7-465e-8761-6d4e59ed4b74/4107847c-be59-4bf9-ab84-6424a80c28e0", payload = str(temperature), qos=0)
-    time.sleep(5)
+host = str(sys.argv[1])
+port = str(sys.argv[2])
+topic = str(sys.argv[3])
+message = str(sys.argv[4])
+qos = str(sys.argv[5]) #Available QoS 0, 1, and 2.
+
+command = "mosquitto_pub -h "+host+" -p "+port+" -t "+topic+" -m '"+message+"' -q "+str(qos)+" -d"
+
+os.system(command)
+print("----------")

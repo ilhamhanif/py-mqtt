@@ -1,11 +1,32 @@
 Playground, do not expect much from this repo.
 
-Communication to get file data on another device in a local connection through online broker on www.mqtt-dashboard.com port=1883
+Communication to get file data on another device in a local connection through local broker using mosquitto.
 
-!.Use sames topic between publisher and subscriber.
-Default : 8d1db723-c4b7-465e-8761-6d4e59ed4b74/4107847c-be59-4bf9-ab84-6424a80c28e0
+Prerequisite :
+1. Install Mosquitto Broker
+$ sudo apt-get update
+$ sudo apt-get install mosquitto
+
+2. Install Mosquitto Clients
+$ sudo apt-get install mosquitto-clients
+
+!. Use sames topic between publisher and subscriber.
+Default : topic/subtopic
+
+!. How to run
+!.. Publisher
+python3 publish.py <mqtt broker host> <port> <topic> <message> <qos level>
+ex:
+python3 publish.py 127.0.0.1 1883 topic 'hello world' 2
+sh publish.sh 127.0.0.1 1883 topic 'hello world' 2
+!.. Subscribers
+python3 subscriber.py <mqtt broker host> <port> <topic> <format> <qos level>
+ex:
+python3 subscriber.py 127.0.0.1 1883 topic '%I|%U|%t|%q|%p|%l' 2
 
 Credits :
-http://www.mqtt-dashboard.com/
-https://github.com/eclipse/paho.mqtt.python
-https://medium.com/python-point/mqtt-basics-with-python-examples-7c758e605d4
+https://www.vultr.com/docs/how-to-install-mosquitto-mqtt-broker-server-on-ubuntu-16-04
+https://mosquitto.org/man/mosquitto_sub-1.html
+http://www.steves-internet-guide.com/mosquitto_pub-sub-clients/
+http://www.steves-internet-guide.com/understanding-mqtt-qos-levels-part-1/
+http://www.steves-internet-guide.com/understanding-mqtt-qos-2/
